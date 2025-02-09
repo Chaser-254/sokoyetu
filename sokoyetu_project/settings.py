@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'listings.apps.ListingsConfig',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 'sokoyetu_project.context_processors.cart',
             ],
         },
     },
@@ -106,3 +108,5 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+CART_ID = 'cart'

@@ -36,7 +36,7 @@
 
                 <!-- Add to Cart -->
                 <div class="mb-4">
-                    <form method="POST">
+                    <form  action="{% url 'cart:cart_add' product.id %}" method="post">
                         {% csrf_token %}
                         <div class="input-group add-to-cart shadow-custom">
                             <div class="input-group-prepend">
@@ -44,9 +44,7 @@
                                     Ksh {{ product.price }}
                                 </span>
                             </div>
-                            <span id="minus" class="input-group-text button_minus px-4">-</span>
-                            <input type="number" name="quantity" value="1" min="1" class="form-control text-center px-3">
-                            <span id="plus" class="input-group-text button_plus px-4">+</span>
+                            {{ cart_product_form.quantity }}
                             <div class="input-group-append">
                                 <button class="btn btn-danger px-4 reduce_padding" type="submit" title="Add to cart">
                                     <i class="fas fa-shopping-cart"></i>

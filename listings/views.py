@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from .models import Category, Product,Review
 from . forms import ReviewForm
+from cart.forms import CartAddProductForm
 
 def product_list(request, category_slug=None):
     categories = Category.objects.all()
@@ -32,5 +33,8 @@ def product_detail(request, category_slug, product_slug):
             author_name = "Anonymous"
             Review.objects.create(product=product, author=author_name, rating=cf['rating'], text=cf['text'])
             return redirect('listings:product_detail', category_slug=category_slug, product_slug=product_slug)
+    else:
+        review_form = ReviewForm()
+        cart_product_form = CartAddProductForm()
 
-    return render(request, 'product/detail.html', {'product': product})
+    return render(request, 'product/detail.html', {'product': product,'review_form': review_form,'cart_product_form': cart_product_form})
