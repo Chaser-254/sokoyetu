@@ -1,15 +1,10 @@
 from django.contrib import admin
 from .models import Category,Product,Review
 
-class CustomAdminSite(admin.AdminSite):
-    site_header = "sokoYETU"
-    site_title = "sokoYETU Admin"
-    index_title = "Welcome to sokoYETU Adminstration"
+admin.site.site_header = "SOKOyetu"
+admin.site.site_title = "SOKOyetu Admin"
+admin.site.index_title = "Welcome to SOKOyetu Adminstration"
 
-    def get_urls(self):
-        urls  = super().get_urls()
-        return urls
-admin.site = CustomAdminSite()
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
