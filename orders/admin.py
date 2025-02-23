@@ -73,6 +73,7 @@ export_to_xlsx.short_description = 'Export to XLSX'
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
 
+@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'first_name', 'last_name', 'email', 'address',

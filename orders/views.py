@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+
+from sokoyetu_project import settings
 from .models import OrderItem, Order, Product
 from .forms import OrderCreateForm
 from cart.views import get_cart, cart_clear
