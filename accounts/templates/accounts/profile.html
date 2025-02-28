@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Account{% endblock %}
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="shadow-custom messages alert 
+            {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}
+            text-center col-lg-7 mx-auto">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="card shadow-custom border-0 col-lg-7 mx-auto mb-3">
+    <h2 class="font-weight-bold text-grey mt-2 text-center">Profile</h2>
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    {{ user_form.first_name }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    {{ user_form.last_name }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    </div>
+                    {{ user_form.email }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    </div>
+                    {{ profile_form.phone_number }}
+                </div>
+            </div>
+        </div>
+
+        <hr class="mt-0">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                    </div>
+                    {{ profile_form.address }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
+                    </div>
+                    {{ profile_form.postal_code }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                    </div>
+                    {{ profile_form.city }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                    </div>
+                    {{ profile_form.country }}
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-warning btn-block" 
+                    data-toggle="tooltip" data-placement="top" 
+                    title="Fill in new details and click 'Update profile'">
+                    <i class="fas fa-save"></i> Update Profile
+                </button>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-secondary btn-block" href="{% url 'password_change' %}">
+                    <i class="fas fa-lock"></i> Change Password
+                </a>
+            </div>
+        </div>
+
+        <hr>
+    </form>
+</div>
+
+{% endblock %}
