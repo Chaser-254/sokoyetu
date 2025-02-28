@@ -3,9 +3,9 @@
 {% block title %}Checkout{% endblock %}
 
 {% block content %}
-<div class="card shadow-custom border-0 col-lg-7 mx-auto mb-3">
+<div class="card shadow-custom border-0 col-lg-7 mx-auto mb-3 p-4">
     <h3 class="py-2 font-weight-bold text-grey text-center">
-        Delivery information:
+        <i class="fas fa-truck"></i> Delivery Information
     </h3>
 
     <form method="post">
@@ -13,26 +13,34 @@
         
         <div class="row">
             <div class="col-md-6">
-                <div class="input-field">
-                    <label class="text-muted">First name</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
                     {{ order_form.first_name }}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-field">
-                    <label class="text-muted">Last name</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
                     {{ order_form.last_name }}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-field">
-                    <label class="text-muted">Email</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    </div>
                     {{ order_form.email }}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-field">
-                    <label class="text-muted">Phone number</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    </div>
                     {{ order_form.telephone }}
                 </div>
             </div>
@@ -40,8 +48,8 @@
 
         {% if not request.user.is_authenticated %}
             <div class="mt-2 text-center">
-                Already registered?
-                <a href="{% url 'login' %}" class="text-decoration-none">
+                <i class="fas fa-user-circle"></i> Already registered?
+                <a href="{% url 'login' %}" class="text-decoration-none text-primary font-weight-bold">
                     Log in
                 </a>
             </div>
@@ -51,26 +59,34 @@
 
         <div class="row">
             <div class="col-md-6">
-                <div class="input-field">
-                    <label class="text-muted">Address</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                    </div>
                     {{ order_form.address }}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-field">
-                    <label class="text-muted">Postal code</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
+                    </div>
                     {{ order_form.postal_code }}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-field mb-0">
-                    <label class="text-muted">City</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                    </div>
                     {{ order_form.city }}
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-field mb-0">
-                    <label class="text-muted">Country</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                    </div>
                     {{ order_form.country }}
                 </div>
             </div>
@@ -78,16 +94,19 @@
 
         <hr>
 
-        <h4 class="py-2 font-weight-bold text-grey">Transport:</h4>
+        <h4 class="py-2 font-weight-bold text-grey">
+            <i class="fas fa-shipping-fast"></i> Transport:
+        </h4>
 
         <div class="row">
             <div class="col-md-12">
-                <div class="radiobtn">
+                <div class="custom-control custom-radio">
                     <input type="radio" id="id_transport_0" name="transport"
                         value="Courier delivery" amount="{{ transport_cost }}"
-                        checked onclick="setTotalCost()" />
-                    <label for="id_transport_0">Delivery fee
-                        <span class="text-danger float-right pr-3 font-weight-bold">
+                        checked class="custom-control-input" onclick="setTotalCost()" />
+                    <label class="custom-control-label" for="id_transport_0">
+                        Delivery fee 
+                        <span class="text-danger float-right font-weight-bold">
                             Ksh.{{ transport_cost }}
                         </span>
                     </label>
@@ -97,28 +116,30 @@
 
         <hr class="mb-4">
 
-        <div class="input-field">
-            <label class="text-muted">Note</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
+            </div>
             {{ order_form.note }}
         </div>
 
         <h4 class="py-2 font-weight-bold text-grey">
-            Price total:
+            <i class="fas fa-receipt"></i> Price Total:
             <span id="order-total" class="text-danger float-right">
                 Ksh. {{ total_cost }}
             </span>
         </h4>
 
-        <div class="col-lg-7 mx-auto mb-3">
+        <div class="col-lg-7 mx-auto">
             <div class="row justify-content-end">
                 <div class="col-lg-8 px-0">
                     <div class="btn-group d-flex">
                         <a href="{% url 'listings:product_list' %}"
-                            class="btn btn-warning shadow-custom col">
-                            Back to shop
+                            class="btn btn-warning shadow-custom col text-white">
+                            <i class="fas fa-shopping-cart"></i> Back to Shop
                         </a>
                         <button type="submit" class="btn btn-danger shadow-custom col">
-                            Create order
+                            <i class="fas fa-check-circle"></i> Create Order
                         </button>
                     </div>
                 </div>

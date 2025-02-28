@@ -32,14 +32,6 @@
                 <i class="fas fa-user mr-1"></i> {{ request.user.username }}
               </a>
             </li>
-            <li class="nav-item mx-2 d-flex align-items-center">
-              <form id="logout-form" action="{% url 'logout' %}" method="post" style="margin: 0;">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-link text-white d-flex align-items-center" style="border: none;background: none; padding: 0; text-decoration: none;">
-                      <i class="fas fa-sign-out-alt mr-1"></i> Log Out
-                  </button>
-              </form>
-            </li>
           {% else %}
             <li class="nav-item mx-2">
               <a href="{% url 'login' %}" class="nav-link text-white d-flex align-items-center">
@@ -57,6 +49,14 @@
               <i class="fas fa-shopping-cart mr-1"></i>
               Ksh.<span id="cart_price">{{ cart_total_price|floatformat:2 }}</span>
             </a>
+          </li>
+          <li class="nav-item mx-2 d-flex align-items-center">
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link text-white d-flex align-items-center" style="border: none;background: none; padding: 0; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt mr-1"></i> Log Out
+                </button>
+            </form>
           </li>
         </ul>
       </div>

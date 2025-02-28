@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'listings.apps.ListingsConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
