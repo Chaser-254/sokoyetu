@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -112,3 +113,6 @@ except ImportError:
     pass
 
 CART_ID = 'cart'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'listings:product_list'
+LOGOUT_REDIRECT_URL = 'listings:product_list'
