@@ -31,7 +31,6 @@ def register(request):
 
     return render(request, 'accounts/register.html', {'user_form': user_form})
 
-
 def user_login(request):
     form = LoginForm(request.POST or None)
 
