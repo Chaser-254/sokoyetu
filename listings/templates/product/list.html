@@ -5,17 +5,31 @@
 <div class="container mt-4">
   <div class="row">
     
-    <div class="col-lg-3">
+    <div class="col-lg-3 d-none d-lg-block">
       <div class="card shadow-sm border-0">
-        <h4 class="p-3 font-weight-bold text-dark text-center">Categories</h4>
+        <h4 class="p-3 font-weight-bold text-dark text-center"><i class="fas fa-list"></i> Categories</h4>
         <ul class="list-group border-0">
           <li class="list-group-item {% if not requested_category %}bg-primary text-white{% endif %}">
-            <a href="{% url 'listings:product_list' %}" class="btn btn-block text-left text-dark">All</a>
+            <a href="{% url 'listings:product_list' %}" class="btn btn-block text-left text-dark"><i class="fas fa-th-large"></i> All</a>
           </li>
           {% for category in categories %}
           <li class="list-group-item {% if category.slug == requested_category.slug %}bg-primary text-white{% endif %}">
-            <a href="{{ category.get_absolute_url }}" class="btn btn-block text-left text-dark">{{ category.name }}</a>
+            <a href="{{ category.get_absolute_url }}" class="btn btn-block text-left text-dark"><i class="fas fa-tag"></i> {{ category.name }}</a>
           </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-12 d-lg-none mb-3">
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle w-100" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-list"></i> Select Category
+        </button>
+        <ul class="dropdown-menu w-100" aria-labelledby="categoryDropdown" id="categoryMenu">
+          <li><a class="dropdown-item" href="{% url 'listings:product_list' %}"><i class="fas fa-th-large"></i> All</a></li>
+          {% for category in categories %}
+          <li><a class="dropdown-item" href="{{ category.get_absolute_url }}"><i class="fas fa-tag"></i> {{ category.name }}</a></li>
           {% endfor %}
         </ul>
       </div>
@@ -25,6 +39,7 @@
       <div class="card shadow-sm border-0 mb-4">
         <div class="card-body text-center">
           <h2 class="font-weight-bold text-dark">
+            <i class="fas fa-box-open"></i>
             {% if requested_category %}
               {{ requested_category.name }}
             {% else %}
@@ -43,20 +58,19 @@
               <img src="{{ product.image.url }}" class="card-img-top img-fluid product-img" alt="{{ product.name }}">
             </a>
             <div class="card-body text-center">
-              <h5 class="card-title font-weight-bold">{{ product.name }}</h5>
-              <p class="card-text text-primary font-weight-bold">Ksh {{ product.price }}</p>
-              <p class="text-muted"><i class="fas fa-fire"></i> {{ product.shu }} Condition</p>
-              <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary btn-sm btn-hover">View Details</a>
+              <h5 class="card-title font-weight-bold"><i class="fas fa-box"></i> {{ product.name }}</h5>
+              <p class="card-text text-primary font-weight-bold"><i class="fas fa-money-bill-wave"></i> Ksh {{ product.price }}</p>
+              <p class="text-muted"><i class="fas fa-thermometer-half"></i> {{ product.shu }} Condition</p>
+              <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary btn-sm btn-hover"><i class="fas fa-eye"></i> View Details</a>
             </div>
           </div>
         </div>
         {% empty %}
         <div class="col-12 text-center">
-          <p class="text-muted">No products found.</p>
+          <p class="text-muted"><i class="fas fa-exclamation-circle"></i> No products found.</p>
         </div>
         {% endfor %}
       </div>
-
     </div>
   </div>
 </div>
@@ -85,5 +99,16 @@
   color: white;
 }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var dropdown = document.getElementById("categoryDropdown");
+    var menu = document.getElementById("categoryMenu");
+    
+    dropdown.addEventListener("click", function() {
+      menu.classList.toggle("show");
+    });
+  });
+</script>
 
 {% endblock content %}

@@ -3,45 +3,43 @@
 {% block content %}
 
 {% if messages %}
-    {% for message in messages %}
-        <div class="shadow-custom messages alert 
-            {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}
-            text-center col-lg-7 mx-auto">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-    {% endfor %}
+    <div class="col-lg-7 mx-auto">
+        {% for message in messages %}
+            <div class="alert 
+                {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}
+                alert-dismissible fade show shadow-custom text-center">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
 {% endif %}
 
-<div class="card shadow-custom border-0 col-lg-7 mx-auto mb-3">
-    <h2 class="font-weight-bold text-grey mt-2 text-center">Profile</h2>
+<div class="card shadow-custom border-0 col-lg-7 mx-auto p-4">
+    <h2 class="font-weight-bold text-dark text-center mb-4">Profile</h2>
     
     <form action="" method="POST">
         {% csrf_token %}
-
         <div class="row">
             {% if user_form %}
                 <div class="col-md-6">
+                    <label class="form-label">First Name</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                         {{ user_form.first_name }}
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label class="form-label">Last Name</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                         {{ user_form.last_name }}
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
+                    <label class="form-label">Email Address</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         {{ user_form.email }}
                     </div>
                 </div>
@@ -49,96 +47,94 @@
 
             {% if profile_form %}
                 <div class="col-md-6">
+                    <label class="form-label">Phone Number</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         {{ profile_form.phone_number }}
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label class="form-label">Address</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                         {{ profile_form.address }}
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label class="form-label">Postal Code</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
                         {{ profile_form.postal_code }}
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label class="form-label">City</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-city"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
                         {{ profile_form.city }}
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label class="form-label">Country</label>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-flag"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fas fa-flag"></i></span>
                         {{ profile_form.country }}
                     </div>
                 </div>
             {% endif %}
         </div>
 
-        <h3 class="mb-3">Your Orders:</h3>
-        <table class="table">
-            {% if request.user.orders.all %}
-                {% for order in request.user.orders.all %}
+        <h3 class="mb-3 mt-4 text-dark">Your Orders</h3>
+        <div class="table-responsive">
+            <table class="table table-hover text-center">
+                <thead class="table-dark">
                     <tr>
-                        <td>
-                            <a href="" class="text-decoration-none">
-                                Order #{{ order.id }}
-                            </a>
-                        </td>
-                        <td>{{ order.created|date }}</td>
-                        <td class="text-green">
-                            Ksh. {{ order.get_total_cost|floatformat:2 }}
-                        </td>
-                        <td>
-                            <a href="" class="text-decoration-none" target="_blank">
-                                <i class="far fa-file-pdf text-danger"></i>
-                                Invoice #{{ order.id }}
-                            </a>
-                        </td>
-                        <td>{{ order.status }}</td>
+                        <th>Order #</th>
+                        <th>Date</th>
+                        <th>Total (Ksh.)</th>
+                        <th>Invoice</th>
+                        <th>Status</th>
                     </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="5" class="text-center">No orders yet.</td>
-                </tr>
-            {% endif %}
-        </table>
+                </thead>
+                <tbody>
+                    {% if request.user.orders.all %}
+                        {% for order in request.user.orders.all %}
+                            <tr>
+                                <td><a href="#" class="text-decoration-none">#{{ order.id }}</a></td>
+                                <td>{{ order.created|date }}</td>
+                                <td class="text-success fw-bold">{{ order.get_total_cost|floatformat:2 }}</td>
+                                <td>
+                                    <a href="#" class="text-danger">
+                                        <i class="far fa-file-pdf"></i> Invoice #{{ order.id }}
+                                    </a>
+                                </td>
+                                <td><span class="badge bg-primary">{{ order.status }}</span></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-muted">No orders yet.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
 
         <hr>
 
         <div class="row">
             <div class="col-md-6">
-                <button type="submit" class="btn btn-warning btn-block" 
-                    data-toggle="tooltip" data-placement="top" 
-                    title="Fill in new details and click 'Update profile'">
+                <button type="submit" class="btn btn-warning btn-block shadow-sm">
                     <i class="fas fa-save"></i> Update Profile
                 </button>
             </div>
             <div class="col-md-6">
-                <a class="btn btn-secondary btn-block" href="{% url 'password_change' %}">
+                <a class="btn btn-secondary btn-block shadow-sm" href="{% url 'password_change' %}">
                     <i class="fas fa-lock"></i> Change Password
                 </a>
             </div>
         </div>
 
-        <hr>
     </form>
 </div>
 

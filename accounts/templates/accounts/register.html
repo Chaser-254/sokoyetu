@@ -5,58 +5,84 @@
 {% block content %}
     <div class="container mt-5">
         {% if messages %}
-            <div class="alert alert-danger col-lg-5 mx-auto text-center shadow">
+            <div class="alert alert-danger alert-dismissible fade show col-lg-5 mx-auto text-center shadow" role="alert">
                 {% for message in messages %}
                     {{ message }}
-                    <a href="" class="close">&times;</a>
                 {% endfor %}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         {% endif %}
 
         <div class="card shadow border-0 col-lg-5 mx-auto mb-3">
-            <div class="card-body">
-                <h3 class="py-2 text-center text-dark font-weight-bold">Register</h3>
-                
+            <div class="card-body p-4">
+                <h3 class="py-2 text-center text-dark font-weight-bold">Create an Account</h3>
+                <p class="text-center text-muted">Join us today! It only takes a minute.</p>
+
                 <form action="" method="post">
                     {% csrf_token %}
 
                     <div class="form-group">
                         <label for="id_first_name" class="font-weight-bold">First Name</label>
                         <div class="input-group">
-                            {{ user_form.first_name }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                            </div>
+                            <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Enter your first name" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_last_name" class="font-weight-bold">Last Name</label>
                         <div class="input-group">
-                            {{ user_form.last_name }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                            </div>
+                            <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Enter your last name" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_email" class="font-weight-bold">Email</label>
                         <div class="input-group">
-                            {{ user_form.email }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
+                            </div>
+                            <input type="email" name="email" id="id_email" class="form-control" placeholder="Enter your email" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_password" class="font-weight-bold">Password</label>
                         <div class="input-group">
-                            {{ user_form.password }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                            </div>
+                            <input type="password" name="password" id="id_password" class="form-control" placeholder="Create a strong password" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="id_password2" class="font-weight-bold">Confirm Password</label>
                         <div class="input-group">
-                            {{ user_form.password2 }}
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                            </div>
+                            <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm your password" required>
                         </div>
                     </div>
 
-                    <button class="btn btn-warning btn-block font-weight-bold" type="submit">Register</button>
+                    <button class="btn btn-warning btn-block font-weight-bold shadow-sm" type="submit">
+                        <i class="bi bi-person-plus-fill"></i> Register
+                    </button>
                 </form>
+
+                <div class="text-center mt-3">
+                    <p class="text-muted">Already have an account? 
+                        <a href="{% url 'login' %}" class="text-warning font-weight-bold text-decoration-none">Log in</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
