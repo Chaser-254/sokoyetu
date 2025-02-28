@@ -18,78 +18,108 @@
     
     <form action="" method="POST">
         {% csrf_token %}
-        
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    </div>
-                    {{ user_form.first_name }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    </div>
-                    {{ user_form.last_name }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    </div>
-                    {{ user_form.email }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                    </div>
-                    {{ profile_form.phone_number }}
-                </div>
-            </div>
-        </div>
-
-        <hr class="mt-0">
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+            {% if user_form %}
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        {{ user_form.first_name }}
                     </div>
-                    {{ profile_form.address }}
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        {{ user_form.last_name }}
                     </div>
-                    {{ profile_form.postal_code }}
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        {{ user_form.email }}
                     </div>
-                    {{ profile_form.city }}
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-flag"></i></span>
+            {% endif %}
+
+            {% if profile_form %}
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        {{ profile_form.phone_number }}
                     </div>
-                    {{ profile_form.country }}
                 </div>
-            </div>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        </div>
+                        {{ profile_form.address }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
+                        </div>
+                        {{ profile_form.postal_code }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-city"></i></span>
+                        </div>
+                        {{ profile_form.city }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                        </div>
+                        {{ profile_form.country }}
+                    </div>
+                </div>
+            {% endif %}
         </div>
+
+        <h3 class="mb-3">Your Orders:</h3>
+        <table class="table">
+            {% if request.user.orders.all %}
+                {% for order in request.user.orders.all %}
+                    <tr>
+                        <td>
+                            <a href="" class="text-decoration-none">
+                                Order #{{ order.id }}
+                            </a>
+                        </td>
+                        <td>{{ order.created|date }}</td>
+                        <td class="text-green">
+                            ${{ order.get_total_cost|floatformat:2 }}
+                        </td>
+                        <td>
+                            <a href="" class="text-decoration-none" target="_blank">
+                                <i class="far fa-file-pdf text-danger"></i>
+                                Invoice #{{ order.id }}
+                            </a>
+                        </td>
+                        <td>{{ order.status }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">No orders yet.</td>
+                </tr>
+            {% endif %}
+        </table>
 
         <hr>
 
