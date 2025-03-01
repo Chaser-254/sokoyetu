@@ -1,0 +1,1 @@
+web: gunicorn sokoyetu_project.wsgi --log-file -
