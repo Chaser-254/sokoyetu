@@ -6,7 +6,6 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,6 +22,8 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'widget_tweaks',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -41,7 +42,7 @@ ROOT_URLCONF = 'sokoyetu_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,6 +58,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sokoyetu_project.wsgi.application'
 
+# Database Configuration
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -65,56 +72,57 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
+# Static files settings
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Media files handling
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Ensure static files are collected properly
+if not os.getenv('DJANGO_DEVELOPMENT', 'True') == 'True':
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Serve media files in development mode
+if os.getenv('DJANGO_DEVELOPMENT', 'True') == 'True':
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+else:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-
-CART_ID = 'cart'
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'listings:product_list'
-LOGOUT_REDIRECT_URL = 'listings:product_list'
-
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass
-
-
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
-        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-    }
-
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
-
-django_heroku.settings(locals())
-
-
+# Cloudinary configuration
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 cloudinary.config(
     cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
     api_key=os.getenv('CLOUDINARY_API_KEY'),
     api_secret=os.getenv('CLOUDINARY_API_SECRET'),
 )
+
+# Authentication settings
+CART_ID = 'cart'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'listings:product_list'
+LOGOUT_REDIRECT_URL = 'listings:product_list'
+
+# Allowed Hosts
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+
+# Activate Django-Heroku settings
+django_heroku.settings(locals())
+
+# Import local settings if available
+try:
+    from .local_settings import *
+except ImportError:
+    pass
