@@ -2,7 +2,8 @@ import os
 
 SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
