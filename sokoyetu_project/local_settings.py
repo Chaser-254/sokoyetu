@@ -6,7 +6,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 
 
-ALLOWED_HOSTS = ["127.0.0.1", "sokoyetu-app-073a3271922d.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ['sokoyetu-app-073a3271922d.herokuapp.com', '127.0.0.1', 'localhost']
 
 DATABASES = {
     'default': {
