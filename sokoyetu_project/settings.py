@@ -84,7 +84,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files handling
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/products')
 
 # Ensure static files are collected properly
 if not os.getenv('DJANGO_DEVELOPMENT', 'True') == 'True':
