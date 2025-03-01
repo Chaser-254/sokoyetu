@@ -1,20 +1,13 @@
 import os
+import dj_database_url
 
 SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-
-
 ALLOWED_HOSTS = ['sokoyetu-app-073a3271922d.herokuapp.com', '127.0.0.1', 'localhost']
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME", "sokoyetu"),
-        'USER': os.getenv("DB_USER", "manu"),
-        'PASSWORD': os.getenv("DB_PASSWORD", "Manu@254#"),
-        'HOST': os.getenv("DB_HOST", "localhost"),
-        'PORT': os.getenv("DB_PORT", "5432"),
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
