@@ -2,6 +2,10 @@ from pathlib import Path
 import os
 import django_heroku
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -99,3 +103,17 @@ if 'DATABASE_URL' in os.environ:
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 django_heroku.settings(locals())
+
+
+cloudinary.config(
+    cloud_name="dvjvwfhtp",
+    api_key="499634162687969",
+    api_secret="qREMsnfm9iKvonj75pbUUMtUIFU"
+)
+
+INSTALLED_APPS += [
+    'cloudinary',
+    'cloudinary_storage',
+]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
