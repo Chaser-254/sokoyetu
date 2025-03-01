@@ -6,7 +6,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 DEBUG = True
 
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "sokoyetu-app-073a3271922d.herokuapp.com", "localhost"]
 
 DATABASES = {
     'default': {
